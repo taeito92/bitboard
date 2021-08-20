@@ -2,6 +2,7 @@ package org.zerock.bitboard.dao;
 
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.session.SqlSession;
+import org.zerock.bitboard.dto.AttachDTO;
 import org.zerock.bitboard.dto.BoardDTO;
 import org.zerock.bitboard.dto.PageDTO;
 
@@ -18,10 +19,22 @@ public enum BoardDAO {
 
         Integer bno = null;
 
-        try(SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)){
+
+        try(SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession()){
             session.insert(PREFIX+".insert", boardDTO);
             bno = boardDTO.getBno();
+
+            List<AttachDTO> attachDTOList = boardDTO.getAttachDTOList();
+            if(attachDTOList != null && attachDTOList.size() > 0) {
+                for (AttachDTO attachDTO : attachDTOList) {
+                    attachDTO.setBno(bno);
+                    session.insert(PREFIX + ".insertAttach", attachDTO);
+                }
+            }
+            session.commit();
+
         }catch(Exception e){
+
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }

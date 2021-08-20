@@ -18,11 +18,10 @@ public class BoardDAOTests {
                 .writer("user1")
                 .build();
 
-        Integer bno = BoardDAO.INSTANCE.insert(boardDTO);
+
 
         for(int i = 0; i < 3; i++){
             AttachDTO attachDTO = AttachDTO.builder()
-                    .bno(bno)
                     .fname("file"+i+".jpg")
                     .savename(System.currentTimeMillis()+"_file"+i+".jpg")
                     .imgyn(true)
@@ -32,6 +31,8 @@ public class BoardDAOTests {
 
         log.info("=================================================");
         log.info(boardDTO);
+
+        BoardDAO.INSTANCE.insert(boardDTO);
     }
 
     @Test
