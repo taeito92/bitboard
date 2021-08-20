@@ -14,5 +14,7 @@
 <div>${boardDTO}</div>
 <div>${pageDTO}</div>
 
+<a href="/board/list?page=${pageDTO.page}&size=${pageDTO.size}">목록</a>
+
 </body>
 </html>

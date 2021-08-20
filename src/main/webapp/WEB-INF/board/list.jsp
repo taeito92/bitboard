@@ -12,6 +12,17 @@
     <title>Title</title>
 </head>
 <body>
+  <script>
+
+      let num = '${param.bno}'
+
+      if(num){
+          alert(num)
+          window.history.replaceState(null,'','/board/list');
+      }
+
+  </script>
+
  <h1>list page</h1>
 
  <h4>${pageMaker}</h4>
@@ -29,7 +40,13 @@
 
 
      <c:forEach items="${dtoList}" var="dto">
-         <li>${dto}</li>
+         <li>
+             <div>
+                 <div>${dto.bno}</div>
+                 <div><a href="/board/read?bno=${dto.bno}&page=${pageMaker.page}&size=${pageMaker.size}">${dto.title}</a> </div>
+                 <div>${dto.viewcount}</div>
+             </div>
+         </li>
      </c:forEach>
  </ul>
 

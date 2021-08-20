@@ -13,6 +13,12 @@ public enum BoardService {
 
     INSTANCE;
 
+    public Integer register(BoardDTO boardDTO)throws RuntimeException{
+
+
+        return BoardDAO.INSTANCE.insert(boardDTO);
+    }
+
     public List<BoardDTO> getList(PageDTO pageDTO)throws RuntimeException{
 
         log.info("BoardService getlist.............................");

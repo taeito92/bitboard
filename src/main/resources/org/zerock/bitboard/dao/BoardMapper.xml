@@ -6,6 +6,9 @@
     <insert id="insert">
         insert into board (title,content,writer)
         values (#{title}, #{content}, #{writer})
+        <selectKey order="AFTER" resultType="int" keyProperty="bno">
+            select last_insert_id()
+        </selectKey>
     </insert>
 
     <select id="select" resultType="org.zerock.bitboard.dto.BoardDTO">

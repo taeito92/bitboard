@@ -14,14 +14,18 @@ public enum BoardDAO {
 
     private static final String PREFIX ="org.zerock.bitboard.dao.BoardMapper";
 
-    public void insert(BoardDTO boardDTO)throws RuntimeException {
+    public Integer insert(BoardDTO boardDTO)throws RuntimeException {
+
+        Integer bno = null;
 
         try(SqlSession session = MyBatisLoader.INSTANCE.getFactory().openSession(true)){
             session.insert(PREFIX+".insert", boardDTO);
+            bno = boardDTO.getBno();
         }catch(Exception e){
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
         }
+        return bno;
     }
 
     public BoardDTO select(Integer bno)throws RuntimeException{

@@ -3,11 +3,36 @@ package dao;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.zerock.bitboard.dao.BoardDAO;
+import org.zerock.bitboard.dto.AttachDTO;
 import org.zerock.bitboard.dto.BoardDTO;
 import org.zerock.bitboard.dto.PageDTO;
 
 @Log4j2
 public class BoardDAOTests {
+
+    @Test
+    public void testInsertWithAttach() {
+        BoardDTO boardDTO = BoardDTO.builder()
+                .title("Test")
+                .content("Test")
+                .writer("user1")
+                .build();
+
+        Integer bno = BoardDAO.INSTANCE.insert(boardDTO);
+
+        for(int i = 0; i < 3; i++){
+            AttachDTO attachDTO = AttachDTO.builder()
+                    .bno(bno)
+                    .fname("file"+i+".jpg")
+                    .savename(System.currentTimeMillis()+"_file"+i+".jpg")
+                    .imgyn(true)
+                    .build();
+            boardDTO.addAttach(attachDTO);
+        }
+
+        log.info("=================================================");
+        log.info(boardDTO);
+    }
 
     @Test
     public void testInsert() {
@@ -18,6 +43,9 @@ public class BoardDAOTests {
                 .build();
 
         BoardDAO.INSTANCE.insert(boardDTO);
+
+        log.info("=================================================");
+        log.info(boardDTO);
     }
 
     @Test
